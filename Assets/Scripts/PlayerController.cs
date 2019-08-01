@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
 
     public bool isOnGround;
+    public Vector3 respawnPosition;
 
     public float checkForGroundRadius;
     public float movementSpeed;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        respawnPosition = transform.position;
         myRigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -42,6 +44,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isOnGround == true)
         {
             myRigidBody.velocity = new Vector3(myRigidBody.velocity.x, jumpSpeed, 0f);
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "SavePoint")
+        {
+            respawnPosition = other.transform.position;
+        }
+
+        if (other.tag == "KillPlane")
+        {
+            //gameObject.SetActive(false);
+            transform.position = respawnPosition;
         }
     }
 }
