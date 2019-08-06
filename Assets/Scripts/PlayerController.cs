@@ -14,11 +14,14 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float jumpSpeed;
 
+    public LevelManager theLevelManager;
+
     private Rigidbody2D myRigidBody;
 
 
     void Start()
     {
+        theLevelManager = FindObjectOfType<LevelManager>();
         respawnPosition = transform.position;
         myRigidBody = GetComponent<Rigidbody2D>();
     }
@@ -56,7 +59,8 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "KillPlane")
         {
             //gameObject.SetActive(false);
-            transform.position = respawnPosition;
+            //transform.position = respawnPosition;
+            theLevelManager.Respawn();
         }
     }
 }
